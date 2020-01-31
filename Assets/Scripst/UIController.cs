@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
@@ -9,6 +7,7 @@ public class UIController : MonoBehaviour
     public Button ClearButton;
     public FractalController FractCtrl;
     public GameObject InfoPanel;
+    public Text Iteration;
 
     [SerializeField] private Color startColor;
     [SerializeField] private Color stopColor;
@@ -44,6 +43,11 @@ public class UIController : MonoBehaviour
     {
         startStopButText = StartAndStopButton.GetComponentInChildren<Text>();
         InfoPanel.SetActive(showAgain);
+    }
+
+    public void UpdateIteration(int i)
+    {
+        Iteration.text = $"iteration: {i}";
     }
 
     public void CloseInfoPanel()

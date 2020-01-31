@@ -6,6 +6,7 @@ public class FractalController : MonoBehaviour
     public CustomRenderTexture Texture;
     public Material FractEffectMaterial;
 
+    [SerializeField] private UIController UICtrl;
     [SerializeField] private float radius;
     [SerializeField] private int pointsCount;
     [SerializeField] private Transform[] points;
@@ -27,6 +28,7 @@ public class FractalController : MonoBehaviour
     private float speed;
     private bool IsFast = true;
     private Coroutine fratcTask;
+    private int iteration;
 
     private void Start()
     {
@@ -140,6 +142,8 @@ public class FractalController : MonoBehaviour
 
     IEnumerator FractalTask()
     {
+        iteration = 0;
+
         Vector2 drawPos = new Vector2(5f, 5f);
         Vector2 pointPos = GetPointPosition(pointsCount);
        
@@ -147,6 +151,7 @@ public class FractalController : MonoBehaviour
         {
             drawPos += Vector2.Scale(pointPos - drawPos, new Vector2(proportion, proportion)); ;
             Draw(drawPos);
+            IterationCounter();
             pointPos = GetPointPosition(pointsCount);
             Texture.Update();
 
@@ -159,6 +164,12 @@ public class FractalController : MonoBehaviour
                 yield return new WaitForSeconds(speed);
             }
         }
+    }
+
+    private void IterationCounter()
+    {
+        iteration++;
+        UICtrl.UpdateIteration(iteration);
     }
 
     private Vector2 GetPointPosition(int maxCount)
